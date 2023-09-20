@@ -1,0 +1,3 @@
+input[data-select='selected']:checked + label {
+  text-decoration: line-through;
+}
