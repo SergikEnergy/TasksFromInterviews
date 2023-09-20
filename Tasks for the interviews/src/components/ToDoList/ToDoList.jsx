@@ -1,12 +1,15 @@
 import './ToDoList.css';
+import { useSelector } from 'react-redux';
 
 import ToDoItem from '../ToDoItem/ToDoItem';
 
-function ToDoList({ todoList, toggleComplete, handleRemove }) {
+function ToDoList() {
+  const todoList = useSelector((state) => state.todos.tasks);
+
   return (
     <ul className=" flex todo-list">
       {todoList.map((item) => (
-        <ToDoItem key={item.id} {...item} toggleComplete={toggleComplete} handleRemove={handleRemove} />
+        <ToDoItem key={item.id} {...item} />
       ))}
     </ul>
   );
