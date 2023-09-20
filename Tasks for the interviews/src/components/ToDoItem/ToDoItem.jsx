@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { removeTask, changeComplete } from '../../store/taskSlice';
 
-function ToDoItem({ id, completed, task }) {
+function ToDoItem({ id, completed, title }) {
   const dispatch = useDispatch();
 
   return (
@@ -17,7 +17,7 @@ function ToDoItem({ id, completed, task }) {
         }}
       />
       <label htmlFor={`todo-${id}`} className="text-black-500 text-3xl m-5">
-        {task}
+        {title}
       </label>
       <button
         onClick={() => {

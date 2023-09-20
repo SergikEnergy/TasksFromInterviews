@@ -7,7 +7,7 @@ function ToDoList() {
   const todoList = useSelector((state) => state.todos.tasks);
 
   return (
-    <ul className=" flex todo-list">
+    <ul className=" flex todo-list flex-col items-center mt-5">
       {todoList.map((item) => (
         <ToDoItem key={item.id} {...item} />
       ))}
