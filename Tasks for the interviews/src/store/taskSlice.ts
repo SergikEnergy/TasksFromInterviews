@@ -1,56 +1,61 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import ITask, { ITaskState } from '../types';
 
-export const getDummyTasks = createAsyncThunk('dailyTasks/getDummyTasks', async function (_, { rejectWithValue }) {
-  try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
-    if (!response.ok) {
-      throw new Error(`Incorrect answer from the server.`);
+export const getDummyTasks = createAsyncThunk<ITask[], undefined, { rejectValue: string }>(
+  'dailyTasks/getDummyTasks',
+  async function (_, { rejectWithValue }) {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
+      if (!response.ok) {
+        return rejectWithValue(`Server doesn't answer. Check correct address!`);
+      } else {
+        return (await response.json()) as ITask[];
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) return rejectWithValue(err.message);
+      return rejectWithValue(`Unexpected error occurred`);
     }
-    const todos = await response.json();
-    return todos;
-  } catch (err) {
-    return rejectWithValue(err.message);
   }
-});
+);
+
+const initialState: ITaskState = {
+  tasks: [],
+  isLoaded: false,
+  errorMessage: null,
+};
 
 const taskSlice = createSlice({
   name: 'dailyTasks',
-  initialState: {
-    tasks: [],
-    isLoaded: false,
-    errorMessage: null,
-  },
+  initialState,
   reducers: {
-    addTask(state, action) {
+    addTask(state, action: PayloadAction<string>) {
       state.tasks.push({
         id: new Date().getTime(),
         completed: false,
-        task: action.payload.task,
+        title: action.payload,
       });
     },
-    removeTask(state, action) {
+    removeTask(state, action: PayloadAction<number>) {
       state.tasks = state.tasks.filter((elem) => elem.id !== action.payload);
     },
-    changeComplete(state, action) {
+    changeComplete(state, action: PayloadAction<number>) {
       const currentTask = state.tasks.find((elem) => elem.id === action.payload);
-      currentTask.completed = !currentTask.completed;
-      console.log(currentTask);
+      if (currentTask) currentTask.completed = !currentTask.completed;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getDummyTasks.pending, (state, action) => {
+      .addCase(getDummyTasks.pending, (state) => {
         state.isLoaded = true;
         state.errorMessage = null;
       })
       .addCase(getDummyTasks.fulfilled, (state, action) => {
         state.isLoaded = false;
         state.tasks = action.payload;
-        state.errorMessage = null;
       })
       .addCase(getDummyTasks.rejected, (state, action) => {
         state.isLoaded = false;
-        state.errorMessage = action.payload;
+        state.errorMessage = action.payload as string;
       });
   },
 });

@@ -1,8 +1,9 @@
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooksRedux';
 import { removeTask, changeComplete } from '../../store/taskSlice';
+import ITask from '../../types';
 
-function ToDoItem({ id, completed, title }) {
-  const dispatch = useDispatch();
+function ToDoItem({ id, completed, title }: ITask) {
+  const dispatch = useAppDispatch();
 
   return (
     <li className="mb-5 text-bold-500 flex items-center mb-4">

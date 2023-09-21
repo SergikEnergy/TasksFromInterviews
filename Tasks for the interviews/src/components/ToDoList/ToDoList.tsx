@@ -1,10 +1,11 @@
 import './ToDoList.css';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooksRedux';
 
 import ToDoItem from '../ToDoItem/ToDoItem';
 
 function ToDoList() {
-  const todoList = useSelector((state) => state.todos.tasks);
+  const todoList = useAppSelector((state) => state.todos.tasks);
+  console.log(todoList);
 
   return (
     <ul className=" flex todo-list flex-col items-center mt-5">

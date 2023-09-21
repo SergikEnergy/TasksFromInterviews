@@ -1,4 +1,6 @@
-function CustomAlert({ message }) {
+import { AlertProps } from '../../types';
+
+function CustomAlert({ message }: AlertProps) {
   return (
     <div role="alert" className="flex flex-col items-center justify-center">
       <div className="max-w-screen-md w-96 flex-1 bg-red-600 text-white font-size font-bold rounded-t px-4 py-2">

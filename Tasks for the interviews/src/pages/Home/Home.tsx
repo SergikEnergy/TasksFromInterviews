@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooksRedux';
 import { addTask, getDummyTasks } from '../../store/taskSlice';
 import { Dna } from 'react-loader-spinner';
 
@@ -9,17 +9,18 @@ import CustomAlert from '../../components/Alert/CustomAlert';
 
 function Home() {
   const [task, setTask] = useState('');
-  const { isLoaded, errorMessage } = useSelector((state) => state.todos);
-  const dispatch = useDispatch();
+  const { isLoaded, errorMessage } = useAppSelector((state) => state.todos);
+  const dispatch = useAppDispatch();
 
   const addTodoItem = () => {
     if (task.trim().length > 0) {
-      dispatch(addTask({ task }));
+      dispatch(addTask(task));
       setTask('');
     }
   };
 
   useEffect(() => {
+    console.log('start');
     dispatch(getDummyTasks());
   }, [dispatch]);
 
