@@ -5,6 +5,8 @@ export default interface ITask {
   userId?: number;
 }
 
+export type Categories = 'all' | 'completed' | 'active';
+
 export interface ITaskState {
   tasks: ITask[];
   isLoaded: boolean;
@@ -19,4 +21,15 @@ export interface AddToDoProps {
 
 export interface AlertProps {
   message: string;
+}
+
+export interface FilterButtonProps {
+  category: string;
+  isActive: boolean;
+  id?: number;
+}
+
+export interface IFilterState {
+  buttons: FilterButtonProps[];
+  selected: Categories;
 }

@@ -1,10 +1,11 @@
 import './ToDoList.css';
 import { useAppSelector } from '../../hooks/hooksRedux';
+import selectByFilter from '../../store/selectors';
 
 import ToDoItem from '../ToDoItem/ToDoItem';
 
 function ToDoList() {
-  const todoList = useAppSelector((state) => state.todos.tasks);
+  const todoList = useAppSelector(selectByFilter);
   console.log(todoList);
 
   return (

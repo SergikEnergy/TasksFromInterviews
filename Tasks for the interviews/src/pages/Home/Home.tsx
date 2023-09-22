@@ -6,6 +6,7 @@ import { Dna } from 'react-loader-spinner';
 import ToDoList from '../../components/ToDoList/ToDoList';
 import AddToDo from '../../components/AddToDoForm/AddToDo';
 import CustomAlert from '../../components/Alert/CustomAlert';
+import FiltersBlock from '../../components/FiltersBlock/FiltersBlock';
 
 function Home() {
   const [task, setTask] = useState('');
@@ -41,6 +42,7 @@ function Home() {
       ) : (
         <ToDoList />
       )}
+      <FiltersBlock />
       {errorMessage && <CustomAlert message={errorMessage} />}
     </main>
   );
